@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="springbootseckill.dao.SeckillDao">
+    <select id="selectAll" resultType="Seckill" flushCache="true">
+        select * from seckill
+    </select>
+
+    <select id="selectOne" resultType="Seckill" flushCache="true">
+        select * from seckill where seckill_id = #{seckillId}
+    </select>
+
+    <update id="updateQuantity"  >
+        update seckill set item_quantity = item_quantity - 1
+        where seckill_id = #{seckillId}
+        and item_quantity > 0
+        and start_time <![CDATA[<]]> #{createTime}
+        and end_time > #{createTime}
+    </update>
+</mapper>

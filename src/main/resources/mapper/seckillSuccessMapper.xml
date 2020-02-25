@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="springbootseckill.dao.SeckillSuccessDao">
+    <resultMap id="seckillResult" type="springbootseckill.dto.SeckillResult">
+        <association property="seckill" javaType="Seckill">
+            <id property="seckillId" column="seckill.seckillId"></id>
+            <result property="itemName" column="seckill.itemName"></result>
+            <result property="itemQuantity" column="seckill.itemQuantity"></result>
+            <result property="itemPrice" column="seckill.itemPrice"></result>
+            <result property="creatTime" column="seckill.createTime"></result>
+            <result property="startTime" column="seckill.startTime"></result>
+            <result property="endTime" column="seckill.endTime"></result>
+        </association>
+        <association property="seckillSuccess" javaType="SeckillSuccess">
+            <id property="seckillId" column="seckillSuccess.seckillId"></id>
+            <id property="phone" column="seckillSuccess.phone"></id>
+            <id property="createTime" column="seckillSuccess.createTime"></id>
+        </association>
+    </resultMap>
+    <insert id="addSeckillSuccess">
+        insert ignore into seckill_success(seckill_id,phone,create_time) values(#{seckillId},#{phone},#{createTime})
+    </insert>
+
+    <select id="querySeckillResult" resultMap="seckillResult" flushCache="true">
+        select ss.seckill_id "seckillSuccess.seckillId",
+        ss.phone "seckillSuccess.phone",
+        ss.create_time "seckillSuccess.createTime",
+        s.seckill_id "seckill.seckillId",
+        s.item_name "seckill.itemName",
+        s.item_quantity "seckill.itemQuantity",
+        s.item_price "seckill.itemPrice",
+        s.creat_time "seckill.createTime",
+        s.start_time "seckill.startTime",
+        s.end_time "seckill.endTime"
+        from seckill_success as ss inner join seckill as s on ss.seckill_id = s.seckill_id
+        where ss.seckill_id = #{seckillId} and ss.phone = #{phone}
+    </select>
+</mapper>
