@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+import springbootseckill.dao.MsgLogDao;
 import springbootseckill.dao.SeckillDao;
 import springbootseckill.dao.SeckillSuccessDao;
 import springbootseckill.dto.ExcuteSeckillResult;

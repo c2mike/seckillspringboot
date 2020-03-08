@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="springbootseckill.dao.MsgLogDao">
+    <select id="selectNeedPostMsg" resultType="MsgLog" flushCache="true">
+        select * from msg_log
+        where status = 0
+        and try_count  <![CDATA[<]]> 3
+        and next_try_time <![CDATA[<]]> #{now}
+    </select>
+
+    <insert id="insertOneMsgLog" parameterType="MsgLog">
+        insert into msg_log(msg_id,context,status,try_count,create_time,next_try_time)
+        values(#{msgId},#{context},#{status},#{tryCount},#{createTime},#{nextTryTime});
+    </insert>
+
+    <update id="updateStatusMsgLog">
+        update msg_log set status = 1 where msg_id = #{msgId};
+    </update>
+
+    <update id="againCommitMsgLog" parameterType="MsgLog">
+        update msg_Log set try_count = #{tryCount},next_try_time = #{nextTryTime}
+        where msg_id = #{msgId};
+    </update>
+
+</mapper>
